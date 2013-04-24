@@ -4,6 +4,10 @@
 #
 # by Klaus M Pfeiffer, http://blog.kmp.or.at/ , 2012-06-24
 
+# 2013-04-24
+#       Added a lot of stuff to create a RoR environment for the Raspberry Pi
+#       -soenderg
+#
 # 2012-06-24
 #	just checking for how partitions are called on the system (thanks to Ricky Birtles and Luke Wilkinson)
 #	using http.debian.net as debian mirror, see http://rgeissert.blogspot.co.at/2012/06/introducing-httpdebiannet-debians.html
