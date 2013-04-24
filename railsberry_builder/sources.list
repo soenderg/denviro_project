@@ -1,0 +1,19 @@
+# 
+
+# deb cdrom:[Debian GNU/Linux 6.0.7 _Squeeze_ - Official Multi-architecture amd64/i386 NETINST #1 20130223-19:02]/ wheezy main
+
+#deb cdrom:[Debian GNU/Linux 6.0.7 _Squeeze_ - Official Multi-architecture amd64/i386 NETINST #1 20130223-19:02]/ wheezy main
+
+deb http://mirrors.dotsrc.org/debian/ wheezy main
+deb-src http://mirrors.dotsrc.org/debian/ wheezy main
+
+deb http://mirrors.dotsrc.org/debian/ wheezy contrib
+
+deb http://security.debian.org/ wheezy/updates main
+deb-src http://security.debian.org/ wheezy/updates main
+
+# wheezy-updates, previously known as 'volatile'
+deb http://mirrors.dotsrc.org/debian/ wheezy-updates main
+deb-src http://mirrors.dotsrc.org/debian/ wheezy-updates main
+
+deb http://mirrors.dotsrc.org/debian/ wheezy-updates contrib
