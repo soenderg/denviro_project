@@ -5,7 +5,7 @@
 # by Klaus M Pfeiffer, http://blog.kmp.or.at/ , 2012-06-24
 
 # 2013-04-24
-#       Added a lot of stuff to create a RoR environment for the Raspberry Pi
+#       Added a lot of stuff to create a RoR environment and I2C devices for the Raspberry Pi
 #       -soenderg
 #
 # 2012-06-24
@@ -69,6 +69,12 @@ if ! [ -b $device ]; then
   exit 1
 fi
 
+echo " ##################### "
+echo "###                 ###"
+echo "##    FIRST STAGE    ##"
+echo "###                 ###"
+echo " ##################### "
+
 if [ "$device" == "" ]; then
   echo "no block device given, just creating an image"
   mkdir -p $buildenv
@@ -128,6 +134,13 @@ cd $rootfs
 
 debootstrap --foreign --arch armel $deb_release $rootfs $deb_local_mirror
 cp /usr/bin/qemu-arm-static usr/bin/
+
+echo " ##################### "
+echo "###                 ###"
+echo "##   SECOND STAGE    ##"
+echo "###                 ###"
+echo " ##################### "
+
 LANG=C chroot $rootfs /debootstrap/debootstrap --second-stage
 
 mount $bootp $bootfs
@@ -141,7 +154,7 @@ echo "proc            /proc           proc    defaults        0       0
 /dev/mmcblk0p1  /boot           vfat    defaults        0       0
 " > etc/fstab
 
-echo "raspberrypi" > etc/hostname
+echo "railsberrypi" > etc/hostname
 
 echo "auto lo
 iface lo inet loopback
@@ -155,49 +168,38 @@ snd_bcm2835
 " >> etc/modules
 
 echo "console-common	console-data/keymap/policy	select	Select keymap from full list
-console-common	console-data/keymap/full	select	de-latin1-nodeadkeys
+console-common	console-data/keymap/full	select	dk-latin1
 " > debconf.set
 
 echo "#!/bin/bash
 debconf-set-selections /debconf.set
 rm -f /debconf.set
+echo deb http://ftp.dk.debian.org/debian/ sid main > /etc/apt/sources.list.d/sid.list
 apt-get update 
-apt-get -y install git-core binutils ca-certificates
+apt-get -y install git-core binutils ca-certificates curl autoconf
 wget http://goo.gl/1BOfJ -O /usr/bin/rpi-update
 chmod +x /usr/bin/rpi-update
 mkdir -p /lib/modules/3.1.9+
 touch /boot/start.elf
 rpi-update
-echo deb http://ftp.dk.debian.org/debian/ sid main > /etc/apt/sources.list.d/sid.list
-apt-get update
-apt-get -y install locales console-common ntp openssh-server less vim build-essential curl\
+apt-get -y install locales console-common ntp openssh-server less vim build-essential\
  libssl-dev libreadline-dev libxml2 libxml2-dev libxslt1-dev sqlite3 libsqlite3-dev nodejs
-curl -L get.rvm.io | bash -s stable
-apt-get -y install ruby1.9.3
-mkdir /tmp/gem && cd /tmp/gem
-git clone http://github.com/rubygems/rubygems
-cd rubygems
-ruby setup.rb
-apt-get -y install rails3 i2c-tools
-gem install rake -v '10.0.4'
 echo \"root:doozer4ever\" | chpasswd
 useradd -g 100 -G 106 -m -d /home/denviro -p orivned -s /bin/bash denviro
-cd /home/denviro
-mkdir src && cd src
-
-# Change this to the real app repos
-echo \"git clone https://github.com/soenderg/sample_app.git...\"
-git clone https://github.com/soenderg/sample_app.git
-cd sample_app
-gem update
-bundle install
-rake db:migrate
+echo \"denviro	ALL=\(ALL\:ALL\) NOPASSWD: ALL\" > /etc/sudoers
 
 sed -i -e 's/KERNEL\!=\"eth\*|/KERNEL\!=\"/' /lib/udev/rules.d/75-persistent-net-generator.rules
 rm -f /etc/udev/rules.d/70-persistent-net.rules
 rm -f third-stage
 " > third-stage
 chmod +x third-stage
+
+echo " ##################### "
+echo "###                 ###"
+echo "##    THIRD STAGE    ##"
+echo "###                 ###"
+echo " ##################### "
+
 LANG=C chroot $rootfs /third-stage
 
 echo "deb $deb_mirror $deb_release main contrib non-free
