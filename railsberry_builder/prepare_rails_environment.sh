@@ -53,5 +53,5 @@ server_name m23.merlose.dk;
 rails_env production;
 root /var/rails_apps/sample_app/public; # <--- be sure to point to 'public'!
 passenger_enabled on;
-} >> /opt/nginx/conf/nginx.conf
+}" >> /opt/nginx/conf/nginx.conf
 sudo /etc/init.d/nginx restart
