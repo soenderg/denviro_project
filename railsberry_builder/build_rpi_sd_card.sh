@@ -187,10 +187,33 @@ apt-get -y install locales console-common ntp openssh-server less vim build-esse
 echo \"root:doozer4ever\" | chpasswd
 groupadd i2c
 useradd -g 100 -G i2c -m -d /home/denviro -p orivned -s /bin/bash denviro
-echo \"denviro	ALL=\(ALL\:ALL\) NOPASSWD: ALL\" > /etc/sudoers
+echo \"denviro	ALL=(ALL:ALL) NOPASSWD: ALL\" >> /etc/sudoers
 
+echo \"----> Checkout Railsberry helperscripts...\"
 cd /home/denviro
 /usr/bin/sudo -u denviro git clone git://github.com/soenderg/denviro_project.git
+if [ -d \"/home/denviro/denviro_project\" ]; then
+  echo \"----> Proceed to doing stuff as denviro user (this might take a LONG while)...\"
+  time /usr/bin/sudo -u denviro /home/denviro/denviro_projec/railsberry_builder/prepare_rails_environment.sh
+else
+  echo \"No denviro_project directory? WTF?\"
+  sleep 10
+  echo \"Trying again...\"
+  su -c \"git clone git://github.com/soenderg/denviro_project.git\" denviro
+  if [ ! -d \"/home/denviro/denviro_project\" ]; then
+    echo \"WTF??? Still no denviro project?\"
+    echo \"Trying once more...\"
+    git clone git://github.com/soenderg/denviro_project.git
+    chown -R denviro:users denviro_project
+  fi
+  if [ -d \"/home/denviro/denviro_project\" ]; then
+    time su -c /home/denviro/denviro_projec/railsberry_builder/prepare_rails_environment.sh denviro
+  else
+    echo \"Ok, I give up...\"
+    echo \"You have to do a checkout yourself. Sorry.\"
+    sleep 10
+  fi
+fi
 
 sed -i -e 's/KERNEL\!=\"eth\*|/KERNEL\!=\"/' /lib/udev/rules.d/75-persistent-net-generator.rules
 rm -f /etc/udev/rules.d/70-persistent-net.rules
@@ -231,6 +254,10 @@ umount $rootp
 if [ "$image" != "" ]; then
   kpartx -d $image
   echo "created image $image"
+  date
+else
+  echo -n "Done: "
+  date
 fi
 
 

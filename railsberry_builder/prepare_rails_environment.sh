@@ -34,7 +34,7 @@ sudo chown root:root /etc/init.d/nginx
 
 echo "***** INSTALLING RAILS APPLICATION..."
 echo
-sudo mkdir /var/railsapps && chown denviro:users /var/railsapps
+sudo mkdir /var/railsapps && sudo chown denviro:users /var/railsapps
 cd /var/railsapps
 # Change to the real app, once ready
 git clone https://github.com/soenderg/sample_app.git
