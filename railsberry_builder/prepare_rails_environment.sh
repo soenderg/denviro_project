@@ -60,7 +60,8 @@ bundle exec rake db:migrate
 echo "***** SETTING UP PASSENGER/NGINX..."
 echo
 sudo mkdir -p /opt/nginx/conf 2>/dev/null
-sudo echo "
+sudo chown denviro:users /opt/nginx/conf
+echo "
 server {
 listen 80;
 server_name m23.merlose.dk;
