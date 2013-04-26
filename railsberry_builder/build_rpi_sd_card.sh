@@ -183,7 +183,7 @@ mkdir -p /lib/modules/3.1.9+
 touch /boot/start.elf
 rpi-update
 apt-get -y install locales console-common ntp openssh-server less vim build-essential\
- libssl-dev libreadline-dev libxml2 libxml2-dev libxslt1-dev sqlite3 libsqlite3-dev nodejs
+ libssl-dev libcurl4-openssl-dev libreadline-dev libxml2 libxml2-dev libxslt1-dev sqlite3 libsqlite3-dev nodejs
 echo \"root:doozer4ever\" | chpasswd
 groupadd i2c
 useradd -g 100 -G i2c -m -d /home/denviro -p orivned -s /bin/bash denviro
