@@ -194,7 +194,7 @@ cd /home/denviro
 /usr/bin/sudo -u denviro git clone git://github.com/soenderg/denviro_project.git
 if [ -d \"/home/denviro/denviro_project\" ]; then
   echo \"----> Proceed to doing stuff as denviro user (this might take a LONG while)...\"
-  time /usr/bin/sudo -u denviro /home/denviro/denviro_projec/railsberry_builder/prepare_rails_environment.sh
+  time /usr/bin/sudo -u denviro /home/denviro/denviro_project/railsberry_builder/prepare_rails_environment.sh
 else
   echo \"No denviro_project directory? WTF?\"
   sleep 10
@@ -207,7 +207,7 @@ else
     chown -R denviro:users denviro_project
   fi
   if [ -d \"/home/denviro/denviro_project\" ]; then
-    time su -c /home/denviro/denviro_projec/railsberry_builder/prepare_rails_environment.sh denviro
+    time su -c /home/denviro/denviro_project/railsberry_builder/prepare_rails_environment.sh denviro
   else
     echo \"Ok, I give up...\"
     echo \"You have to do a checkout yourself. Sorry.\"
