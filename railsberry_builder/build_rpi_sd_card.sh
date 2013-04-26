@@ -176,7 +176,7 @@ debconf-set-selections /debconf.set
 rm -f /debconf.set
 echo deb http://ftp.dk.debian.org/debian/ sid main > /etc/apt/sources.list.d/sid.list
 apt-get update 
-apt-get -y install git-core binutils ca-certificates curl autoconf
+apt-get -y install sudo git-core binutils ca-certificates curl autoconf
 wget http://goo.gl/1BOfJ -O /usr/bin/rpi-update
 chmod +x /usr/bin/rpi-update
 mkdir -p /lib/modules/3.1.9+
@@ -185,8 +185,12 @@ rpi-update
 apt-get -y install locales console-common ntp openssh-server less vim build-essential\
  libssl-dev libreadline-dev libxml2 libxml2-dev libxslt1-dev sqlite3 libsqlite3-dev nodejs
 echo \"root:doozer4ever\" | chpasswd
-useradd -g 100 -G 106 -m -d /home/denviro -p orivned -s /bin/bash denviro
+groupadd i2c
+useradd -g 100 -G i2c -m -d /home/denviro -p orivned -s /bin/bash denviro
 echo \"denviro	ALL=\(ALL\:ALL\) NOPASSWD: ALL\" > /etc/sudoers
+
+cd /home/denviro
+/usr/bin/sudo -u denviro git clone git://github.com/soenderg/denviro_project.git
 
 sed -i -e 's/KERNEL\!=\"eth\*|/KERNEL\!=\"/' /lib/udev/rules.d/75-persistent-net-generator.rules
 rm -f /etc/udev/rules.d/70-persistent-net.rules
@@ -230,5 +234,10 @@ if [ "$image" != "" ]; then
 fi
 
 
-echo "done."
+echo
+echo " ##################### "
+echo "###                 ###"
+echo "##       DONE.       ##"
+echo "###                 ###"
+echo " ##################### "
 
