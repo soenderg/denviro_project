@@ -19,6 +19,7 @@ install_ruby () {
   echo
   rvm install 1.9.3
   rvm use 1.9.3 --default
+}
 
 install_passenger () {
   echo "***** INSTALLING PASSENGER+NGINX..."
@@ -51,7 +52,7 @@ install_initd_script () {
   sudo chown root:root /etc/init.d/nginx
 }
 
-install_rails_app () {}
+install_rails_app () {
   echo "***** INSTALLING RAILS APPLICATION..."
   echo
   sudo mkdir /var/railsapps 2>/dev/null
