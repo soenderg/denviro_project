@@ -45,7 +45,7 @@ install_initd_script () {
     rm -fr rails-nginx-passenger-ubuntu
   fi
   if [ -d "/etc/init.d/nginx" ]; then
-    rm -fr /etc/init.d/nginx" ]
+    rm -fr /etc/init.d/nginx ]
   fi
   git clone git://github.com/jnstq/rails-nginx-passenger-ubuntu.git
   sudo mv rails-nginx-passenger-ubuntu/nginx/nginx /etc/init.d/nginx
