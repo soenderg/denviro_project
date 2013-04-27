@@ -3,9 +3,12 @@
 install_rvm () {
   echo "***** INSTALLING RVM..."
   echo
-  bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)
-  echo '[[ -s \"$HOME/.rvm/scripts/rvm\" ]] && . \"$HOME/.rvm/scripts/rvm\" # Load RVM function' >> ~/.bash_profile
+  #bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)
+  curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer | bash -s stable
+  echo "source \"$HOME/.rvm/scripts/rvm\"" >> ~/.bash_profile
   source "$HOME/.rvm/scripts/rvm"
+  echo "install: --no-rdoc --no-ri" >> "$HOME/.gemrc"
+  echo "update: --no-rdoc --no-ri" >> "$HOME/.gemrc"
 }
 
 install_rvm_pkgs () {
@@ -63,7 +66,7 @@ install_rails_app () {
     rm -fr sample_app
   fi
   git clone https://github.com/soenderg/sample_app.git
-  rvmsudo gem update
+  rvmsudo gem update --no-ri --no-rdoc
   export RAILS_ENV=production
   cd sample_app
   bundle install
@@ -96,38 +99,38 @@ usage () {
 while [ "$1" != "" ]; do
     case $1 in
         --all )			shift
-				install_rvm
-				install_rvm_pkgs
-				install_ruby
-				install_passenger
-				install_rails
-				install_initd_script
-				install_rails_app
-				setup_passenger
+				time install_rvm
+				time install_rvm_pkgs
+				time install_ruby
+				time install_passenger
+				time install_rails
+				time install_initd_script
+				time install_rails_app
+				time setup_passenger
                                 ;;
         --install-rvm )		shift
-				install_rvm
+				time install_rvm
                                 ;;
         --install-rvm-pkgs )	shift
-				install_rvm_pkgs
+				time install_rvm_pkgs
                                 ;;
         --install-ruby )	shift
-				install_ruby
+				time install_ruby
                                 ;;
         --install-passenger )	shift
-				install_passenger
+				time install_passenger
                                 ;;
         --install-rails )	shift
-				install_rails
+				time install_rails
                                 ;;
         --install-initd )	shift
-				install_initd_script
+				time install_initd_script
                                 ;;
         --install-rails-app )	shift
-				install_rails_app
+				time install_rails_app
                                 ;;
         --setup-passenger )	shift
-				setup_passenger
+				time setup_passenger
                                 ;;
         -h | --help )           usage
                                 exit
