@@ -207,7 +207,7 @@ else
     chown -R denviro:users denviro_project
   fi
   if [ -d \"/home/denviro/denviro_project\" ]; then
-    time su -c /home/denviro/denviro_project/railsberry_builder/prepare_rails_environment.sh denviro
+    time su -c \"/home/denviro/denviro_project/railsberry_builder/prepare_rails_environment.sh --all\" denviro
   else
     echo \"Ok, I give up...\"
     echo \"You have to do a checkout yourself. Sorry.\"
