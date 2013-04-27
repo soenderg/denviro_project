@@ -26,7 +26,7 @@ install_passenger () {
   echo
   export rvmsudo_secure_path=1
   rvmsudo gem install passenger --no-ri --no-rdoc
-  rvmsudo passenger-install-nginx-module --auto --auto-download
+  rvmsudo passenger-install-nginx-module --auto --auto-download --prefix=/opt/nginx
 }
 
 install_rails () {
