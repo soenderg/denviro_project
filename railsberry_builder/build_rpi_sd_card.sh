@@ -184,7 +184,7 @@ touch /boot/start.elf
 rpi-update
 apt-get -y install locales console-common ntp openssh-server less vim build-essential\
  libssl-dev libcurl4-openssl-dev libreadline-dev libxml2 libxml2-dev libxslt1-dev\
- sqlite3 libsqlite3-dev nodejs python
+ sqlite3 libsqlite3-dev nodejs python ruby1.9.3 ruby-passenger nginx rails3
 echo \"root:doozer4ever\" | chpasswd
 groupadd i2c
 useradd -g 100 -G i2c -m -d /home/denviro -p orivned -s /bin/bash denviro
@@ -195,7 +195,7 @@ cd /home/denviro
 /usr/bin/sudo -u denviro git clone git://github.com/soenderg/denviro_project.git
 if [ -d \"/home/denviro/denviro_project\" ]; then
   echo \"----> Proceed to doing stuff as denviro user (this might take a LONG while)...\"
-  time /usr/bin/sudo -u denviro /home/denviro/denviro_project/railsberry_builder/prepare_rails_environment.sh --all
+  time /home/denviro/denviro_project/railsberry_builder/prepare_rails_environment.sh --all
 else
   echo \"No denviro_project directory? WTF?\"
   sleep 10
@@ -208,7 +208,7 @@ else
     chown -R denviro:users denviro_project
   fi
   if [ -d \"/home/denviro/denviro_project\" ]; then
-    time su -c \"/home/denviro/denviro_project/railsberry_builder/prepare_rails_environment.sh --all\" denviro
+    time /home/denviro/denviro_project/railsberry_builder/prepare_rails_environment.sh --all
   else
     echo \"Ok, I give up...\"
     echo \"You have to do a checkout yourself. Sorry.\"
