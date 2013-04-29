@@ -19,6 +19,7 @@ install_nginx_passenger () {
 install_rails_app () {
   echo "***** INSTALLING RAILS APPLICATION..."
   echo
+  export RAILS_ENV=production
   sudo mkdir /var/railsapps 2>/dev/null
   sudo chown denviro:users /var/railsapps 2>/dev/null
   cd /var/railsapps
@@ -28,23 +29,19 @@ install_rails_app () {
   fi
   echo "rails new sample_app"
   rails new sample_app
+  cd sample_app
+  bundle exec rake assets:precompile
+  cd ..
+  chown -R denviro:users /var/railsapps/sample_app
 }
 
 setup_passenger () {  
   echo "***** SETTING UP PASSENGER/NGINX..."
   echo
-  #mkdir -p /opt/nginx/conf 2>/dev/null
-  #chown denviro:users /opt/nginx/conf
-  #cat << EOF >> /opt/nginx/conf/nginx.conf
-  #server \{
-  #listen 80;
-  #server_name m23.merlose.dk;
-  #rails_env production;
-  #root /var/rails_apps/sample_app/public; # <--- be sure to point to 'public'!
-  #passenger_enabled on;
-  #\}
-#EOF
-  /etc/init.d/nginx restart
+  echo "cp /home/denviro/denviro_project/railsberry_builder/nginx.init.d /etc/init.d/nginx"
+  cp /home/denviro/denviro_project/railsberry_builder/nginx.init.d /etc/init.d/nginx
+  echo "cp /home/denviro/denviro_project/railsberry_builder/nginx.conf.d /opt/nginx/conf/nginx.conf"
+  cp /home/denviro/denviro_project/railsberry_builder/nginx.conf /opt/nginx/conf/nginx.conf
 }
 
 usage () {
