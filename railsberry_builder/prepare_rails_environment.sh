@@ -12,8 +12,8 @@ install_nginx_passenger () {
   echo
   echo "gem install passenger"
   gem install passenger
-  echo "/usr/local/bin/passenger-install-nginx-module --auto --auto-prefix=/opt/nginx --auto-download"
-  /usr/local/bin/passenger-install-nginx-module --auto --auto-prefix=/opt/nginx --auto-download
+  echo "/usr/local/bin/passenger-install-nginx-module --auto --prefix=/opt/nginx --auto-download"
+  /usr/local/bin/passenger-install-nginx-module --auto --prefix=/opt/nginx --auto-download
 }
 
 install_rails_app () {
