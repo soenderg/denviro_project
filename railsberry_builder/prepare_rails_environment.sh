@@ -1,8 +1,19 @@
 #!/bin/bash
 
 setup_gemrc () {
+  echo "***** SETUP GEMRC..."
+  echo
   echo "install: --no-rdoc --no-ri" >> "$HOME/.gemrc"
   echo "update: --no-rdoc --no-ri" >> "$HOME/.gemrc"
+}
+
+install_nginx_passenger () {
+  echo "***** INSTALLING NGINX WITH PASSENGER..."
+  echo
+  echo "gem install passenger"
+  gem install passenger
+  echo "/usr/local/bin/passenger-install-nginx-module --auto --auto-prefix=/opt/nginx --auto-download"
+  /usr/local/bin/passenger-install-nginx-module --auto --auto-prefix=/opt/nginx --auto-download
 }
 
 install_rails_app () {
@@ -15,6 +26,7 @@ install_rails_app () {
   if [ -d "sample_app" ]; then
     rm -fr sample_app
   fi
+  echo "rails new sample_app"
   rails new sample_app
 }
 
@@ -44,11 +56,15 @@ while [ "$1" != "" ]; do
     case $1 in
         --all )			shift
 				time setup_gemrc
+				time install_nginx_passenger
 				time install_rails_app
 				time setup_passenger
                                 ;;
         --setup-gemrc )		shift
 				time setup_gemrc
+                                ;;
+        --install-nginx-passenger )	shift
+				time install_rails_app
                                 ;;
         --install-rails-app )	shift
 				time install_rails_app

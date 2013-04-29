@@ -146,7 +146,7 @@ LANG=C chroot $rootfs /debootstrap/debootstrap --second-stage
 mount $bootp $bootfs
 
 echo "deb $deb_local_mirror $deb_release main contrib non-free
-" > etc/apt/sources.list
+" >> etc/apt/sources.list
 
 echo "dwc_otg.lpm_enable=0 console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 rootwait" > boot/cmdline.txt
 
@@ -174,7 +174,7 @@ console-common	console-data/keymap/full	select	dk-latin1
 echo "#!/bin/bash
 debconf-set-selections /debconf.set
 rm -f /debconf.set
-echo deb http://ftp.dk.debian.org/debian/ sid main > /etc/apt/sources.list.d/sid.list
+echo deb http://ftp.dk.debian.org/debian/ sid main >> /etc/apt/sources.list.d/sid.list
 apt-get update 
 apt-get -y install sudo git-core binutils ca-certificates curl autoconf
 wget http://goo.gl/1BOfJ -O /usr/bin/rpi-update
@@ -184,7 +184,7 @@ touch /boot/start.elf
 rpi-update
 apt-get -y install locales console-common ntp openssh-server less vim build-essential\
  libssl-dev libcurl4-openssl-dev libreadline-dev libxml2 libxml2-dev libxslt1-dev\
- sqlite3 libsqlite3-dev nodejs python ruby1.9.3 ruby-passenger nginx rails3
+ sqlite3 libsqlite3-dev nodejs python ruby1.9.3 ruby-passenger rails3
 echo \"root:doozer4ever\" | chpasswd
 groupadd i2c
 useradd -g 100 -G i2c -m -d /home/denviro -p orivned -s /bin/bash denviro
@@ -231,7 +231,7 @@ echo " ##################### "
 LANG=C chroot $rootfs /third-stage
 
 echo "deb $deb_mirror $deb_release main contrib non-free
-" > etc/apt/sources.list
+" >> etc/apt/sources.list
 
 # soenderg: add i2c device at bootup
 echo "i2c-bcm2708" >> etc/modules
