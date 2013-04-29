@@ -69,7 +69,7 @@ install_rails_app () {
   rvmsudo gem update --no-ri --no-rdoc
   export RAILS_ENV=production
   cd sample_app
-  bundle install
+  bundle install --without test development
   bundle exec rake assets:precompile #Precompile assets to public/ dir
   bundle exec rake db:migrate
 }
