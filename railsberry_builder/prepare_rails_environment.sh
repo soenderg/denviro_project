@@ -12,6 +12,7 @@ install_nginx_passenger () {
   echo
   echo "gem install passenger"
   gem install passenger
+  echo "Building passenger module for nginx. This will take a looooong time."
   echo "/usr/local/bin/passenger-install-nginx-module --auto --prefix=/opt/nginx --auto-download"
   /usr/local/bin/passenger-install-nginx-module --auto --prefix=/opt/nginx --auto-download
 }
