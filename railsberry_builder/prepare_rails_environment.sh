@@ -62,7 +62,7 @@ while [ "$1" != "" ]; do
 				time setup_gemrc
                                 ;;
         --install-nginx-passenger )	shift
-				time install_rails_app
+				time install_nginx_passenger
                                 ;;
         --install-rails-app )	shift
 				time install_rails_app
